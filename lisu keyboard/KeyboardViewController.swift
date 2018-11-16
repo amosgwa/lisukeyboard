@@ -108,7 +108,7 @@ class KeyboardViewController: UIInputViewController {
                                               attribute: .notAnAttribute,
                                               multiplier: 1,
                                               constant: viewHeight)
-        heightConstraint?.priority = UILayoutPriority(UILayoutPriorityRequired)
+        heightConstraint?.priority = UILayoutPriority.required
         self.view.addConstraint(heightConstraint!)
       } else {
         heightConstraint?.constant = viewHeight
@@ -238,22 +238,22 @@ class KeyboardViewController: UIInputViewController {
     }
     
     // Return button is pressed.
-    func returnPressedOnce(sender: UIButton) {
+    @objc func returnPressedOnce(sender: UIButton) {
         self.releasedSpecialKey(sender: sender)
         self.textDocumentProxy.insertText("\n")
     }
     
-    func returnPressedHold(sender: UIButton) {
+    @objc func returnPressedHold(sender: UIButton) {
         self.pressedSpecialKey(sender: sender)
     }
     
     // Mode change is pressed.
-    func modeChangePressedOnce(sender: UIButton){
+    @objc func modeChangePressedOnce(sender: UIButton){
         self.releasedSpecialKey(sender: sender)
         togglePageView(currPage: currPage, newPage: sender.tag)
     }
     
-    func modeChangePressedHold(sender: UIButton) {
+    @objc func modeChangePressedHold(sender: UIButton) {
         self.pressedSpecialKey(sender: sender)
     }
     
@@ -283,25 +283,25 @@ class KeyboardViewController: UIInputViewController {
     }
     
     // Trigger for delete on hold and press once.
-    func backspacePressedOnce(sender: UIButton) {
+    @objc func backspacePressedOnce(sender: UIButton) {
         self.releasedSpecialKey(sender: sender)
         self.backspaceButtonTimer?.invalidate()
         //self.backspaceDelete()
     }
     
-    func backspacePressed(sender: UIButton) {
+    @objc func backspacePressed(sender: UIButton) {
         self.backspaceDelete()
         self.pressedSpecialKey(sender: sender)
     }
     
-    func backspacePressedLong(gestureRecognizer: UILongPressGestureRecognizer) {
-        if gestureRecognizer.state == UIGestureRecognizerState.began {
+    @objc func backspacePressedLong(gestureRecognizer: UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == UIGestureRecognizer.State.began {
             if backspaceButtonTimer == nil {
                 backspaceButtonTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(KeyboardViewController.backspaceDelete), userInfo: nil, repeats: true)
                 backspaceButtonTimer!.tolerance = 0.01
             }
         }
-        else if gestureRecognizer.state == UIGestureRecognizerState.ended {
+        else if gestureRecognizer.state == UIGestureRecognizer.State.ended {
             
             // Release the key
             self.releasedSpecialKey(sender: gestureRecognizer.view as! UIButton)
@@ -311,22 +311,22 @@ class KeyboardViewController: UIInputViewController {
         }
     }
     
-    func backspaceDelete() {
+    @objc func backspaceDelete() {
         self.textDocumentProxy.deleteBackward()
     }
     
     // Triger for spacebar press.
-    func spacePressedOnce(sender: UIButton) {
+    @objc func spacePressedOnce(sender: UIButton) {
         self.whitenKey(sender: sender)
         self.textDocumentProxy.insertText((sender.titleLabel?.text)!)
     }
     
-    func spacePressedHold(sender: UIButton) {
+    @objc func spacePressedHold(sender: UIButton) {
         self.darkenKey(sender: sender)
     }
     
     // Trigger for character key press.
-    func keyPressedHold(sender: keyButton){
+    @objc func keyPressedHold(sender: keyButton){
         if isIPad {
             self.darkenKey(sender: sender)
         } else {
@@ -334,7 +334,7 @@ class KeyboardViewController: UIInputViewController {
         }
     }
     
-    func keyPressedOnce(sender: UIButton) {
+    @objc func keyPressedOnce(sender: UIButton) {
         // Remove the popup keys
         if isIPad {
             self.whitenKey(sender: sender)

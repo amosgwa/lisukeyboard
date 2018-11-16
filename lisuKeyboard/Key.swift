@@ -83,7 +83,7 @@ class Key{
             self.button.imageEdgeInsets = UIEdgeInsets(top: 0.2*self.height,left: 0,bottom: 0.2*self.height,right: 0)
           }
             
-            self.button.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+            self.button.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
             self.button.imageView?.tintColor = theme.keyColor
             self.button.setImage(tintedImage, for: [])
         } else if keyValue != nil {
